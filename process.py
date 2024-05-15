@@ -83,6 +83,7 @@ def process_train_event(evt: dict):
     execution_time=(time.time() - start_time)
     logger.info(f"|    Execution time:  {execution_time} secs |")
 
+
     logger.info(f"|                                                |")
     logger.info(f"| 2. Create Classification      model            |")
 
