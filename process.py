@@ -74,8 +74,8 @@ def process_train_event(evt: dict):
     #dataProvider1URL="data/demographic.parquet"
     dataProvider2URL="https://github.com/datavillage-me/cage-process-clinical-trial-patient-cohort-selection/raw/main/data/patients.parquet"
     #dataProvider2URL="data/patients.parquet"
-    #dataProvider3URL="https://github.com/datavillage-me/cage-process-clinical-trial-result-prediction/raw/main/data/outcome.parquet"
-    dataProvider3URL="data/outcome.parquet"
+    dataProvider3URL="https://github.com/datavillage-me/cage-process-clinical-trial-result-prediction/raw/main/data/outcome.parquet"
+    #dataProvider3URL="data/outcome.parquet"
     start_time = time.time()
     logger.info(f"|    Start time:  {start_time} secs |")
     df = duckdb.sql("SELECT *  from '"+dataProvider3URL+"' as outcome,'"+dataProvider1URL+"' as demographic,'"+dataProvider2URL+"' as patients WHERE demographic.national_id=patients.national_id AND demographic.national_id=outcome.national_id").df()
@@ -113,15 +113,13 @@ def process_train_event(evt: dict):
     # Evaluate model
     accuracy = accuracy_score(y_test, y_pred)
     classificationReportJson=classification_report(y_test, y_pred,output_dict=True)
-    print (classificationReportJson)
-    print("Accuracy:", accuracy)
 
     logger.info(f"|                                                |")
     logger.info(f"| 3. Save outputs of the collaboration           |")
     logger.info(f"|    Save created model                          |")
     logger.info(f"|    Save model classification report            |")
     # save the model to the results location
-    xg_undersampled.save_model('/resources/outputs/model.json')
+    model.save_model('/resources/outputs/model.json')
     
     with open('/resources/outputs/classification-report.json', 'w', newline='') as file:
        file.write(json.dumps(classificationReportJson))
