@@ -68,8 +68,9 @@ def process_train_event(evt: dict):
     # load the training data from data providers
     # duckDB is used to load the data and aggregated them in one single datasets
     logger.info(f"| 1. Load data from data providers               |")
-    logger.info(f"|    https://github.com/./demographic.parquet |")
-    logger.info(f"|    https://github.com/./patients.parquet |")
+    logger.info(f"|    https://github.com/./demographic.parquet    |")
+    logger.info(f"|    https://github.com/./patients.parquet       |")
+    logger.info(f"|    https://github.com/./outcome.parquet        |")
     dataProvider1URL="https://github.com/datavillage-me/cage-process-clinical-trial-patient-cohort-selection/raw/main/data/demographic.parquet"
     #dataProvider1URL="data/demographic.parquet"
     dataProvider2URL="https://github.com/datavillage-me/cage-process-clinical-trial-patient-cohort-selection/raw/main/data/patients.parquet"
