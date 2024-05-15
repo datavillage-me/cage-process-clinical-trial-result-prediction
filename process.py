@@ -78,7 +78,7 @@ def process_train_event(evt: dict):
     #dataProvider3URL="data/outcome.parquet"
     start_time = time.time()
     logger.info(f"|    Start time:  {start_time} secs |")
-    df = duckdb.sql("SELECT *  from '"+dataProvider3URL+"' as outcome,'"+dataProvider1URL+"' as demographic,'"+dataProvider2URL+"' as patients WHERE demographic.national_id=patients.national_id AND demographic.national_id=outcome.national_id").df()
+    df = duckdb.sql("SELECT *  from '"+dataProvider3URL+"' as outcome,'"+dataProvider1URL+"' as demographic,'"+dataProvider2URL+"' as patients WHERE demographic.user_hash=patients.user_hash AND demographic.user_hash=outcome.user_hash").df()
     
     execution_time=(time.time() - start_time)
     logger.info(f"|    Execution time:  {execution_time} secs |")
@@ -95,7 +95,7 @@ def process_train_event(evt: dict):
     # Encode categorical variables
     merged_df = pd.get_dummies(df, columns=[ "income_level", "education_level", "employment_status"])
     # Combine numerical and encoded categorical features
-    features = merged_df.columns.drop([target,'national_id','national_id_1','national_id_2',"medical_problem", "medical_medication", "medical_vaccine", "location","gender"])
+    features = merged_df.columns.drop([target,'user_hash','user_hash_1','user_hash_2','national_id','national_id_1','national_id_2',"medical_problem", "medical_medication", "medical_vaccine", "location","gender"])
 
 
     #print(merged_df.columns)
